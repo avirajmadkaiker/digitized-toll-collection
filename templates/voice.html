@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Command Example</title>
+    <style>
+       body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #9e346f; 
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .round-image {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            background: rgb(225, 166, 219);
+        }
+
+        .round-image img {
+            width: 50%;
+            height: 50%;
+            object-fit: cover;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .blinking-text {
+            animation: blink 1s infinite;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" onclick="refreshPage()">
+    <div class="round-image">
+        <br/>
+        <p class="blinking-text" id="output">Say something...</p>
+        <br/><br/><br/><br/>
+        <img src="{{ image_path }}" alt="Round Image">
+        <p class="click">Click & Speak</p>
+    </div>
+   
+</div>
+
+<script>
+    function refreshPage() {
+            location.reload(); // Reloads the current page
+        }
+    // Check if the browser supports the Web Speech API
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+        // Create a SpeechRecognition object
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+
+        // Set some properties for the recognition
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+
+        // Event handler when speech recognition starts
+        recognition.onstart = function() {
+            console.log('Speech recognition started...');
+        };
+
+        // Event handler when speech recognition ends
+        recognition.onend = function() {
+            console.log('Speech recognition ended...');
+        };
+
+        // Event handler for when a result is obtained
+        recognition.onresult = function(event) {
+            const result = event.results[0][0].transcript;
+            document.getElementById('output').innerText = result;
+            document.getElementById('output').className = 'None';
+        };
+
+        // Start the speech recognition when the page loads
+        recognition.start();
+    } else {
+        document.getElementById('output').innerText = 'Web Speech API is not supported in this browser.';
+    }
+</script>
+
+</body>
+</html>
