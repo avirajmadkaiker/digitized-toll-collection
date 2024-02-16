@@ -4,28 +4,19 @@ import speech_recognition as sr
 app = Flask(__name__)
 
 @app.route('/reporting')
-def index():
+def reporting():
    image_path = url_for('static', filename='images/personal-voice-assistant-icon.jpg')
-   print('Request for main page received')
+   print('Request for reporting page received')
    return render_template('voice.html', image_path=image_path)
 
-@app.route('/speech_to_text', methods=['POST'])
-def speech_to_text():
-    try:
-        recognizer = sr.Recognizer()
-
-        with sr.Microphone() as source:
-            print("Listening...")
-            audio = recognizer.listen(source)
-
-        text = recognizer.recognize_google(audio)
-
+@app.route('/reports', methods=['POST'])
+def get_reports():
+   print('Request for get_reports page received')
+   try:
+        text = "text report"
         return jsonify({'text': text})
-
-    except sr.UnknownValueError:
-        return jsonify({'error': 'Speech recognition could not understand audio.'})
-    except sr.RequestError as e:
-        return jsonify({'error': f"Could not request results from Google Web Speech API; {e}"})
+   except sr.RequestError as e:
+        return jsonify({'error': f"Could not request results from DB; {e}"})
 
 if __name__ == '__main__':
     app.run(debug=True)

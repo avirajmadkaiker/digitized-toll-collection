@@ -11,7 +11,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #9e346f; 
+            background-color: #dd007a; 
         }
 
         .container {
@@ -24,7 +24,7 @@
             border-radius: 50%;
             overflow: hidden;
             margin: 0 auto;
-            background: rgb(225, 166, 219);
+            background: #FFB3E1;
         }
 
         .round-image img {
@@ -47,11 +47,10 @@
 
 <div class="container" onclick="refreshPage()">
     <div class="round-image">
-        <br/>
-        <p class="blinking-text" id="output">Say something...</p>
         <br/><br/><br/><br/>
+        <h3 class="blinking-text" id="output" style="color: #53012e;">Say something...</h3>
         <img src="{{ image_path }}" alt="Round Image">
-        <p class="click">Click & Speak</p>
+        <p class="click" style="color: #53012e;">Click & Speak</p>
     </div>
    
 </div>
